@@ -2,7 +2,7 @@ import tetrominoAI
 from tetromino import main,runGame
 from random import uniform
 
-def beginEvolution(seedAI):
+def beginEvolution(seedAI,num_generations = None):
 
 	best = None
 	score = None
@@ -12,14 +12,18 @@ def beginEvolution(seedAI):
 			best = ai
 			score = ai.score
 
-	print("Score: {0}, Weights: {1}".format(best.score,best.weights))
+	print("Score: {0}, Lines: {2}, Weights: {1}".format(best.score,best.weights,best.linesCleared))
 
+def newGeneration(parentAIs):
+	return
 
 def evaluateFitness(ai):
-	ai.score = runGame(ai)
+	score, linesCleared = runGame(ai)
+	ai.score = score
+	ai.linesCleared = linesCleared
 
 def createRandomSeeds(num_seeds):
-	seedAI = [tetrominoAI.TetrominoChromosome()]
+	seedAI = []
 	for i in range(num_seeds):
 		distWeight = uniform(-1,1)
 		clearWeight = uniform(-1,1)
@@ -32,7 +36,7 @@ def createRandomSeeds(num_seeds):
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights))
 	return seedAI
 
-seedAI = createRandomSeeds(0)
+seedAI = createRandomSeeds(4)
 beginEvolution(seedAI)
 
 # main(tetrominoAI.TetrominoChromosome())

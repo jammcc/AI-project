@@ -21,6 +21,7 @@ class TetrominoChromosome:
 	def __init__(self, weights=testWeights):
 		self.weights = weights
 		self.score = 0
+		self.linesCleared = 0
 
 	def randomMove(self,board,piece):
 		tempPiece = dict(piece)

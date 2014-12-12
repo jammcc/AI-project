@@ -47,7 +47,8 @@ def runGame(ai=None):
     movingLeft = False
     movingRight = False
     score = 0
-    level, fallFreq = calculateLevelAndFallFreq(score)
+    linesCleared = 0
+    level, fallFreq = calculateLevelAndFallFreq(linesCleared)
 
     fallingPiece = getNewPiece()
     nextPiece = getNewPiece()
@@ -61,7 +62,7 @@ def runGame(ai=None):
 
             if not isValidPosition(board, fallingPiece):
                 print("Final score: {0}".format(score))
-                return score # can't fit a new piece on the board, so game over
+                return score, linesCleared # can't fit a new piece on the board, so game over
 
         if ai == None:
             checkForQuit()
@@ -151,8 +152,10 @@ def runGame(ai=None):
             if not isValidPosition(board, fallingPiece, adjY=1):
                 # falling piece has landed, set it on the board
                 addToBoard(board, fallingPiece)
-                score += removeCompleteLines(board)
-                level, fallFreq = calculateLevelAndFallFreq(score)
+                curr_lines_cleared = removeCompleteLines(board)
+                linesCleared += curr_lines_cleared
+                score += calculateScore(curr_lines_cleared,level)
+                level, fallFreq = calculateLevelAndFallFreq(linesCleared)
                 fallingPiece = None
             else:
                 # piece did not land, just move the piece down
@@ -173,7 +176,17 @@ def runGame(ai=None):
             pygame.display.update()
             FPSCLOCK.tick(FPS)
 
-
+def calculateScore(numLines,level):
+    multiplier = 0
+    if numLines == 1:
+        multiplier = 40
+    if numLines == 2:
+        multiplier = 100
+    if numLines == 3:
+        multiplier = 300
+    if numLines == 4:
+        multiplier = 1200
+    return (level+1)*multiplier
 
 def makeTextObjs(text, font, color):
     surf = font.render(text, True, color)
