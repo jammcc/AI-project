@@ -93,8 +93,8 @@ def orderAIs(ais):
 def newGeneration(parentAIs, elitism=False):
 	babies = []
 	if elitism: #remove weakest half, keep top quarter, make babies from top half
-		tophalf = parentAIs[:len(parentAIs/2)]
-		babies = parentAIs[:len(parentAIs/4)]
+		tophalf = parentAIs[:len(parentAIs)/2]
+		babies = parentAIs[:len(parentAIs)/4]
 		for i in range(len(parentAIs) - len(parentAIs)/4):
 			parent1 = chooseParents(tophalf)
 			tempparents = list(tophalf)
