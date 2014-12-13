@@ -13,28 +13,37 @@ class aiThread(threading.Thread):
 		self.aiQ = aiQ
 	def run(self):
 		while True:
+			global numEvaled
 			aiLock.acquire()
 			if not self.aiQ.empty():
 				ai = self.aiQ.get()
 				aiLock.release()
 				evaluateFitness(ai)
+				with aiLock:
+					numEvaled +=1
+					newGenStart.notify()
 			else:
 				aiLock.release()
 				break
 
 def beginMultiTheadEval(seedAI, numThreads):
-	print ('multi')
+	global numEvaled
 	aiQueue = Queue.Queue(len(seedAI))
-	for ai in seedAI:
-		aiQueue.put(ai)
+
+	with aiLock:
+		for ai in seedAI:
+			aiQueue.put(ai)
 
 	threads = []
 	for i in range(numThreads):
 		thread = aiThread(i, aiQueue)
 		thread.start()
 		threads.append(thread)
-	while not aiQueue.empty():
-		pass
+
+	with aiLock:
+		while numEvaled != len(seedAI):
+			newGenStart.wait()
+		numEvaled = 0
 
 	for t in threads:
 		t.join()
@@ -42,6 +51,9 @@ def beginMultiTheadEval(seedAI, numThreads):
 def beginEvolution(seedAI,num_generations = None,numThreads=0):
 	if num_generations == None:
 		num_generations = 1
+
+	if numThreads != 0:
+		print ('NumThreads: {0}'.format(numThreads))
 
 	for i in range(num_generations):
 		print("Generation {0}".format(i))
@@ -128,8 +140,10 @@ def createRandomSeeds(num_seeds):
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights))
 	return seedAI
 
-numThreads = 0
+numThreads = 4
 aiLock = threading.Lock()
+numEvaled = 0
+newGenStart = threading.Condition(aiLock)
 seedAI = createRandomSeeds(4)
 beginEvolution(seedAI,10,numThreads=numThreads)
 
