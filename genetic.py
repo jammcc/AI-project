@@ -22,7 +22,8 @@ class aiThread(threading.Thread):
 				aiLock.release()
 				break
 
-def beginMultiTheadEval(seedAI):
+def beginMultiTheadEval(seedAI, numThreads):
+	print ('multi')
 	aiQueue = Queue.Queue(len(seedAI))
 	for ai in seedAI:
 		aiQueue.put(ai)
@@ -38,14 +39,14 @@ def beginMultiTheadEval(seedAI):
 	for t in threads:
 		t.join()
 
-def beginEvolution(seedAI,num_generations = None,multi=False):
+def beginEvolution(seedAI,num_generations = None,numThreads=0):
 	if num_generations == None:
 		num_generations = 1
 
 	for i in range(num_generations):
 		print("Generation {0}".format(i))
-		if multi:
-			beginMultiTheadEval(seedAI)
+		if numThreads != 0:
+			beginMultiTheadEval(seedAI,numThreads)
 		else:
 			for ai in seedAI:
 				evaluateFitness(ai)
@@ -127,9 +128,9 @@ def createRandomSeeds(num_seeds):
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights))
 	return seedAI
 
-numThreads = 4
+numThreads = 0
 aiLock = threading.Lock()
-seedAI = createRandomSeeds(16)
-beginEvolution(seedAI,10,True)
+seedAI = createRandomSeeds(4)
+beginEvolution(seedAI,10,numThreads=numThreads)
 
 # main(tetrominoAI.TetrominoChromosome())
