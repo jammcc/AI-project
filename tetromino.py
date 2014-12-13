@@ -48,6 +48,7 @@ def runGame(ai=None):
     movingRight = False
     score = 0
     linesCleared = 0
+    numPieces = 0
     level, fallFreq = calculateLevelAndFallFreq(linesCleared)
 
     fallingPiece = getNewPiece()
@@ -58,10 +59,11 @@ def runGame(ai=None):
             # No falling piece in play, so start a new piece at the top
             fallingPiece = nextPiece
             nextPiece = getNewPiece()
+            numPieces += 1
             lastFallTime = time.time() # reset lastFallTime
 
             if not isValidPosition(board, fallingPiece) or linesCleared > 100:
-                print("Final score: {0}, Lines: {1}".format(score, linesCleared))
+                print("Final score: {0}, Lines: {1}, Pieces: {2}".format(score, linesCleared, numPieces))
                 return score, linesCleared # can't fit a new piece on the board, so game over
 
         if ai == None:
