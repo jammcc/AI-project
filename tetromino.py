@@ -37,7 +37,7 @@ def testValidFunction():
     valid = isValidPosition(b,p)
     print("x: {0}, y: {1}, shape: {3}, rotation: {4}, valid: {2}".format(p['x'],p['y'],valid,p['shape'],p['rotation']))
 
-def runGame(ai=None):
+def runGame(ai=None, lineLimit = 100):
     # setup variables for the start of the game
     board = getBlankBoard()
     lastMoveDownTime = time.time()
@@ -62,11 +62,11 @@ def runGame(ai=None):
             numPieces += 1
             lastFallTime = time.time() # reset lastFallTime
 
-            if not isValidPosition(board, fallingPiece) or linesCleared > 100:
+            if not isValidPosition(board, fallingPiece) or linesCleared > 1000:
                 print("Final score: {0}, Lines: {1}, Pieces: {2}".format(score, linesCleared, numPieces))
                 return score, linesCleared # can't fit a new piece on the board, so game over
 
-        if ai != None or (ai != None and DRAWMODE):
+        if ai == None or (ai != None and DRAWMODE):
             checkForQuit()
             for event in pygame.event.get(): # event handling loop
                 if event.type == KEYUP:
