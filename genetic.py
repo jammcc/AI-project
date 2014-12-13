@@ -1,5 +1,5 @@
 import tetrominoAI
-from parser import Parser
+import parser
 from tetromino import main,runGame
 from random import uniform, randint, random
 from copy import deepcopy
@@ -30,7 +30,7 @@ class aiThread(threading.Thread):
 				aiLock.release()
 				break
 
-def beginMultiTheadEval(seedAI, numThreads):
+def beginMultiTheadEval(self, seedAI, numThreads):
 	global numEvaled
 	aiQueue = Queue.Queue(len(seedAI))
 
@@ -175,8 +175,10 @@ weight =  [0, -0.1, -0.959944778488526, -0.7565604302338298, 0.3189338415448301,
 
 # main(tetrominoAI.TetrominoChromosome(weights=weight))
 
-# hundlines_16nr_200gen = 'weights100lines16NRseeds200gen.txt'
-# ais = Parser().parseWeightFile(hundlines_16nr_200gen)
-# print(ais[0].score)
+hundlines_16nr_200gen = 'weights100lines16NRseeds200gen.txt'
+hundlines_16r_200gen = 'weights100lines16Rseeds200gen.txt'
+# parsedAIs = parser.Parser(hundlines_16nr_200gen)
+parsedAIs = parser.Parser(hundlines_16r_200gen)
+parsedAIs.plotScores()
 
 # main()

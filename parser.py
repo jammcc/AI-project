@@ -1,14 +1,9 @@
+import matplotlib.pyplot as plt
 from tetrominoAI import TetrominoChromosome
-from genetic import orderAIs
 
 class Parser:
-	def __init__(self):
-		return
-
-	def getTopNAIs(self,filename,n):
-		ais = self.parseWeightFile(filename)
-		ordered = orderAIs(ais)
-		return ordered[:n]
+	def __init__(self,filename):
+		self.ais = self.parseWeightFile(filename)
 
 	def parseWeightFile(self,filename):
 		ais = []
@@ -24,3 +19,8 @@ class Parser:
 				ai.linesCleared = linesCleared
 				ais.append(ai)
 		return ais
+
+	def plotScores(self):
+		plt.plot([i for i in range(len(self.ais))], [ai.score for ai in self.ais])
+		# plt.axis([0, len(ai, 0, 20])
+		plt.show()
