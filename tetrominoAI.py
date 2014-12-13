@@ -45,7 +45,7 @@ class TetrominoChromosome:
 				tempPiece['rotation'] = rot
 				tempPiece['y'] = 0
 				if isValidPosition(board, tempPiece):
-					score = self.getScore(board,tempPiece, nextPiece=nextPiece,)
+					score = self.getScore(board,tempPiece, nextPiece=nextPiece)
 					# tempPiece['y'] = piece['y']
 					if best_score == None:
 						best_piece = tempPiece
