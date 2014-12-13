@@ -1,21 +1,74 @@
 import tetrominoAI
 from tetromino import main,runGame
-from random import uniform
+from random import uniform, randint, random
 
 def beginEvolution(seedAI,num_generations = None):
 
-	best = None
-	score = None
-	for ai in seedAI:
-		evaluateFitness(ai)
-		if best == None or ai.score > score:
-			best = ai
-			score = ai.score
+	if num_generations == None:
+		num_generations = 1
 
+	for i in range(num_generations):
+		print("Generation {0}".format(i))
+		for ai in seedAI:
+			evaluateFitness(ai)
+		ordered = orderAIs(seedAI)
+		seedAI = newGeneration(ordered)
+
+	best = ordered[0]
 	print("Score: {0}, Lines: {2}, Weights: {1}".format(best.score,best.weights,best.linesCleared))
 
+#return ordered from best to worst
+def orderAIs(ais):
+	ordered = []
+	while len(ais) != 0:
+		bestindex = 0
+		bestscore = ais[0].score
+		for i in range(1,len(ais)):
+			if ais[i].score > bestscore:
+				bestscore = ais[i].score
+				bestindex = i
+		ordered.append(ais.pop(bestindex))
+	return ordered
+
 def newGeneration(parentAIs):
-	return
+	parentAIs.pop(-1)
+	parent1 = chooseParents(parentAIs)
+	parent2 = parentAIs[1]
+	while parent2 == parent1:
+		parent2 = chooseParents(parentAIs)
+	baby = makeBaby(parent1,parent2)
+	parentAIs.append(baby)
+	return parentAIs
+
+#choose parents proportional to fitness
+def chooseParents(parentAIs):
+	totalscore = sum(ai.score for ai in parentAIs)
+	i = random()*totalscore
+	curr = 0
+	for ai in parentAIs:
+		curr += ai.score
+		if  i < curr:
+			return ai
+	return None
+
+def makeBaby(parent1,parent2):
+	numweights = len(parent1.weights)
+	newWeights = []
+	for i in range(numweights):
+		weight = 0.0
+		if randint(0,1) == 0:
+			weight = parent1.weights[i]
+		else:
+			weight = parent2.weights[i]
+		weight = mutation(weight, 0.1)
+		newWeights.append(weight)
+	return tetrominoAI.TetrominoChromosome(newWeights)
+
+def mutation(orig_weight,mutation_rate):
+	if random() < mutation_rate:
+		return uniform(-1,1)
+	else:
+		return orig_weight
 
 def evaluateFitness(ai):
 	score, linesCleared = runGame(ai)
@@ -37,6 +90,6 @@ def createRandomSeeds(num_seeds):
 	return seedAI
 
 seedAI = createRandomSeeds(4)
-beginEvolution(seedAI)
+beginEvolution(seedAI,10)
 
 # main(tetrominoAI.TetrominoChromosome())
