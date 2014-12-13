@@ -64,9 +64,7 @@ def beginEvolution(seedAI,num_generations = None,numThreads=0):
 				evaluateFitness(ai)
 		ordered = orderAIs(seedAI)
 		seedAI = newGeneration(ordered)
-
-	best = ordered[0]
-	print("Score: {0}, Lines: {2}, Weights: {1}".format(best.score,best.weights,best.linesCleared))
+		print("Score: {0}, Lines: {2}, Weights: {1}".format(ordered[0].score,ordered[0].weights,ordered[0].linesCleared))	
 
 #return ordered from best to worst
 def orderAIs(ais):
@@ -141,15 +139,15 @@ def createRandomSeeds(num_seeds):
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights,useNext=False))
 	# seedAI = []
 	# for i in range(num_seeds):
-	# 	seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.542307978631468, 0.8540339922767739, -0.6974984811734923, -0.2119389800396081, 0.27763894057955496, 0.09744403762439835, -0.16825829666764758]))
+	# 	seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.542307978631468, 0.8540339922767739, -0.6974984811734923, -0.2119389800396081, 0.27763894057955496, 0.09744403762439835, -0.16825829666764758, 0.05]))
 	return seedAI
 
 numThreads = 0
 aiLock = threading.Lock()
 numEvaled = 0
 newGenStart = threading.Condition(aiLock)
-seedAI = createRandomSeeds(2)
-beginEvolution(seedAI,2,numThreads=numThreads)
+seedAI = createRandomSeeds(8)
+beginEvolution(seedAI,10,numThreads=numThreads)
 
 # main(tetrominoAI.TetrominoChromosome())
 
