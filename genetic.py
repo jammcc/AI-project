@@ -88,9 +88,11 @@ def newGeneration(parentAIs):
 	babies = []
 	for i in range(len(parentAIs)):
 		parent1 = chooseParents(parentAIs)
+		parentAIs.remove(parent1)
 		parent2 = chooseParents(parentAIs)
 		baby = makeBaby(parent1,parent2)
 		babies.append(baby)
+		parentAIs.append(parent1)
 	return babies
 
 #choose parents proportional to fitness
@@ -152,6 +154,7 @@ def createRandomSeeds(num_seeds):
 # newGenStart = threading.Condition(aiLock)
 # seedAI = createRandomSeeds(16)
 # beginEvolution(seedAI,10,numThreads=numThreads)
+
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
 # main(tetrominoAI.TetrominoChromosome(weights=[0.04406910518575535, -0.8239039168154034, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.29575025661696075, 0.3584059853811308]))

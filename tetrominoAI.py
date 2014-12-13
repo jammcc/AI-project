@@ -41,9 +41,9 @@ class TetrominoChromosome:
 		tpiece = dict(piece)
 		pieceId = piece['shape']
 		numRotations = len(PIECES[pieceId])
-		best_piece = piece
+		best_piece = dict(piece)
 		best_score = self.getScore(board,tpiece,nextPiece=nextPiece)
-		best_piece['y'] += self.distToBottom(board,piece)
+		best_piece['y'] += self.distToBottom(board,best_piece)
 		for position in range(-2,BOARDWIDTH):
 			for rot in range(numRotations):
 				tempPiece = dict(piece)

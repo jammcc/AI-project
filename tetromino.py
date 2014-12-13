@@ -37,7 +37,7 @@ def testValidFunction():
     valid = isValidPosition(b,p)
     print("x: {0}, y: {1}, shape: {3}, rotation: {4}, valid: {2}".format(p['x'],p['y'],valid,p['shape'],p['rotation']))
 
-def runGame(ai=None):
+def runGame(ai=None, lineLimit = 100):
     # setup variables for the start of the game
     board = getBlankBoard()
     lastMoveDownTime = time.time()
