@@ -182,5 +182,7 @@ weight =  [0, -0.1, -0.959944778488526, -0.7565604302338298, 0.3189338415448301,
 
 hundlines_16r_200gen = 'weights100lines16Rseeds200gen.txt'
 parsedAIs2 = parser.Parser(hundlines_16r_200gen)
-parsedAIs2.plotScores()
+# parsedAIs2.plotScores()
+# parsedAIs2.plotLinesCleared()
+parsedAIs2.plotLinesVsScore()
 # main()
