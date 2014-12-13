@@ -14,10 +14,11 @@ newGenStart = threading.Condition(aiLock)
 
 class aiThread(threading.Thread):
 	"""docstring for aiThread"""
-	def __init__(self, threadID, aiQ):
+	def __init__(self, threadID, aiQ,lineLimit=100):
 		threading.Thread.__init__(self)
 		self.threadID = threadID
 		self.aiQ = aiQ
+		self.lineLimit = lineLimit
 	def run(self):
 		while True:
 			global numEvaled
@@ -25,7 +26,7 @@ class aiThread(threading.Thread):
 			if not self.aiQ.empty():
 				ai = self.aiQ.get()
 				aiLock.release()
-				evaluateFitness(ai)
+				evaluateFitness(ai,self.lineLimit)
 				with aiLock:
 					numEvaled +=1
 					newGenStart.notify()
@@ -55,7 +56,7 @@ def beginMultiTheadEval(self, seedAI, numThreads):
 	for t in threads:
 		t.join()
 
-def beginEvolution(seedAI,num_generations = None,numThreads=0):
+def beginEvolution(seedAI,num_generations = None,numThreads=0,lineLimit=100):
 	if num_generations == None:
 		num_generations = 1
 
@@ -68,7 +69,7 @@ def beginEvolution(seedAI,num_generations = None,numThreads=0):
 			beginMultiTheadEval(seedAI,numThreads)
 		else:
 			for ai in seedAI:
-				evaluateFitness(ai)
+				evaluateFitness(ai,lineLimit=lineLimit)
 		ordered = orderAIs(seedAI)
 		seedAI = newGeneration(ordered)
 		with open(fileName, 'a') as f:
@@ -131,8 +132,8 @@ def mutation(orig_weight,mutation_rate):
 	else:
 		return orig_weight
 
-def evaluateFitness(ai):
-	score, linesCleared = runGame(ai)
+def evaluateFitness(ai,lineLimit=100):
+	score, linesCleared = runGame(ai,lineLimit=lineLimit)
 	ai.score = score
 	ai.linesCleared = linesCleared
 
@@ -158,10 +159,9 @@ def createRandomSeeds(num_seeds):
 	# 	seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.29273680972498917, -0.35995754766161214, 0.012633707025612395, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
 	return seedAI
 
-# numThreads = 0
-
-# seedAI = createRandomSeeds(16)
-# beginEvolution(seedAI,200,numThreads=numThreads)
+numThreads = 0
+seedAI = createRandomSeeds(16)
+beginEvolution(seedAI,200,numThreads=numThreads,lineLimit=100)
 
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
@@ -180,7 +180,7 @@ weight =  [0, -0.1, -0.959944778488526, -0.7565604302338298, 0.3189338415448301,
 # parsedAIs1 = parser.Parser(hundlines_16nr_200gen)
 # parsedAIs1.plotScores()
 
-hundlines_16r_200gen = 'weights100lines16Rseeds200gen.txt'
-parsedAIs2 = parser.Parser(hundlines_16r_200gen)
-parsedAIs2.plotScores()
+# hundlines_16r_200gen = 'weights100lines16Rseeds200gen.txt'
+# parsedAIs2 = parser.Parser(hundlines_16r_200gen)
+# parsedAIs2.plotScores()
 # main()
