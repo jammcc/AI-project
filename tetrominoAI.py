@@ -18,10 +18,11 @@ bumpinessWeight = -0.24077
 testWeights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight]
 
 class TetrominoChromosome:
-	def __init__(self, weights=testWeights):
+	def __init__(self, weights=testWeights, useNext = False):
 		self.weights = weights
 		self.score = 0
 		self.linesCleared = 0
+		self.useNext = useNext
 
 	def randomMove(self,board,piece):
 		tempPiece = dict(piece)
@@ -33,6 +34,8 @@ class TetrominoChromosome:
 		return tempPiece if isValidPosition(board,tempPiece) else piece
 
 	def bestMove(self,board, piece, nextPiece = None):
+		if not self.useNext:
+			nextPiece = None
 		#perform BFS
 		tpiece = dict(piece)
 		pieceId = piece['shape']
