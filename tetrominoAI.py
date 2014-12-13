@@ -122,7 +122,7 @@ class TetrominoChromosome:
 		prev_column = None
 		for column in board:
 			if prev_column != None:
-				ho_roughness = compareColumns(prev_column, column)
+				ho_roughness = self.compareColumns(prev_column, column)
 				horizontal_roughness += ho_roughness
 			prev_column = column
 
@@ -169,7 +169,7 @@ class TetrominoChromosome:
 					columnHeight -= 1.0
 		return holes, blockades, columnHeight, vertical_roughness
 
-	def compareColumns(col1, col2):
+	def compareColumns(self, col1, col2):
 		horizontal_roughness = 0
 		for b1, b2 in zip(col1,col2):
 			if b1 != b2:

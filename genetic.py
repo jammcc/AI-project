@@ -149,17 +149,17 @@ def createRandomSeeds(num_seeds):
 		vertRoughWeight = uniform(-1,1)
 		weights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight, scoreWeight,wellWeight,altDiffWeight,hoRoughWeight,vertRoughWeight]
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights,useNext=False))
-	seedAI = []
-	for i in range(num_seeds):
-		seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.29273680972498917, -0.35995754766161214, 0.012633707025612395, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
+	# seedAI = []
+	# for i in range(num_seeds):
+	# 	seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.29273680972498917, -0.35995754766161214, 0.012633707025612395, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
 	return seedAI
 
-# numThreads = 0
-# aiLock = threading.Lock()
-# numEvaled = 0
-# newGenStart = threading.Condition(aiLock)
-# seedAI = createRandomSeeds(16)
-# beginEvolution(seedAI,200,numThreads=numThreads)
+numThreads = 0
+aiLock = threading.Lock()
+numEvaled = 0
+newGenStart = threading.Condition(aiLock)
+seedAI = createRandomSeeds(16)
+beginEvolution(seedAI,200,numThreads=numThreads)
 
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
@@ -168,5 +168,5 @@ def createRandomSeeds(num_seeds):
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.14153234653955638, 0.16899177050877512, -0.9987792538542004, -0.8453062347116065, 0.23130316007976615, 0.18111870466738278, -0.2900956878696639, 0.28976659359991985]))
 # main(tetrominoAI.TetrominoChromosome(weights=[0.35272186636082536, 0.27988300741810423, -0.994208214509138, -0.7531771675316605, 0.495530410285022, -0.8559373911265069, -0.2900956878696639, 0.17112501629360133]))
-main(tetrominoAI.TetrominoChromosome(weights=[0.5182933670384273, 0.14919437263201996, -0.9662774875146158, -0.5134136356909402, 0.7046477056021003, -0.9394286440371347, -0.3604850414719061, 0.9049378315570618]))
+# main(tetrominoAI.TetrominoChromosome(weights=[0.5182933670384273, 0.14919437263201996, -0.9662774875146158, -0.5134136356909402, 0.7046477056021003, -0.9394286440371347, -0.3604850414719061, 0.9049378315570618]))
 # main()
