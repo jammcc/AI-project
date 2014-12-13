@@ -31,3 +31,7 @@ class Parser:
 	def plotLinesVsScore(self):
 		plt.plot([ai.linesCleared for ai in self.ais], [ai.score for ai in self.ais], 'ro')
 		plt.show()
+
+	def plotScoreLineRatio(self):
+		plt.plot([i for i in range(len(self.ais))], [ai.score/float(ai.linesCleared) for ai in self.ais])
+		plt.show()
