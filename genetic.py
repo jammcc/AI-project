@@ -141,17 +141,19 @@ def createRandomSeeds(num_seeds):
 		scoreWeight = uniform(-1,1)
 		weights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight, scoreWeight]
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights,useNext=False))
-	# seedAI = []
-	# for i in range(num_seeds):
-	# 	seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.542307978631468, 0.8540339922767739, -0.6974984811734923, -0.2119389800396081, 0.27763894057955496, 0.09744403762439835, -0.16825829666764758, 0.05]))
+	seedAI = []
+	for i in range(num_seeds):
+		seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.29273680972498917, -0.35995754766161214, 0.012633707025612395, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
 	return seedAI
 
 # numThreads = 0
 # aiLock = threading.Lock()
 # numEvaled = 0
 # newGenStart = threading.Condition(aiLock)
-# seedAI = createRandomSeeds(2)
-# beginEvolution(seedAI,2,numThreads=numThreads)
+# seedAI = createRandomSeeds(16)
+# beginEvolution(seedAI,10,numThreads=numThreads)
 
-main(tetrominoAI.TetrominoChromosome())
+# main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
+# main(tetrominoAI.TetrominoChromosome(weights=[0.04406910518575535, -0.8239039168154034, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.29575025661696075, 0.3584059853811308]))
+main(tetrominoAI.TetrominoChromosome(useNext=True,weights=[0.04406910518575535, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
 

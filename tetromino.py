@@ -62,11 +62,11 @@ def runGame(ai=None):
             numPieces += 1
             lastFallTime = time.time() # reset lastFallTime
 
-            if not isValidPosition(board, fallingPiece) or linesCleared > 100:
+            if not isValidPosition(board, fallingPiece) or linesCleared > 1000:
                 print("Final score: {0}, Lines: {1}, Pieces: {2}".format(score, linesCleared, numPieces))
                 return score, linesCleared # can't fit a new piece on the board, so game over
 
-        if ai != None or (ai != None and DRAWMODE):
+        if ai == None or (ai != None and DRAWMODE):
             checkForQuit()
             for event in pygame.event.get(): # event handling loop
                 if event.type == KEYUP:
@@ -143,7 +143,7 @@ def runGame(ai=None):
         if ai == None:
             stepTime = time.time() - lastFallTime > fallFreq
         elif ai != None and DRAWMODE:
-            stepTime = time.time() - lastFallTime > fallFreq
+            stepTime = True #time.time() - lastFallTime > fallFreq
             fallingPiece, move_score = ai.bestMove(board,fallingPiece, nextPiece=nextPiece)
             # print("fallingpiece y: {0}, x: {1}, shape:{2}, rotation: {3}".format(fallingPiece['y'],fallingPiece['x'],fallingPiece['shape'], fallingPiece['rotation']))
         else:
