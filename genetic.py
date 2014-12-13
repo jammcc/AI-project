@@ -1,6 +1,7 @@
 import tetrominoAI
 from tetromino import main,runGame
 from random import uniform, randint, random
+from copy import deepcopy
 import threading
 import Queue
 import time
@@ -66,6 +67,8 @@ def beginEvolution(seedAI,num_generations = None,numThreads=0):
 				evaluateFitness(ai)
 		ordered = orderAIs(seedAI)
 		seedAI = newGeneration(ordered)
+
+		ordered = orderAIs(deepcopy(seedAI))
 		with open(fileName, 'a') as f:
 			f.write(str(ordered[0].weights) + "|" + str(ordered[0].score) + "|" + str(ordered[0].linesCleared) + "\n")
 		print("Score: {0}, Lines: {2}, Weights: {1}".format(ordered[0].score,ordered[0].weights,ordered[0].linesCleared))	
@@ -148,15 +151,15 @@ def createRandomSeeds(num_seeds):
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.29273680972498917, -0.35995754766161214, 0.012633707025612395, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
 	return seedAI
 
-# numThreads = 0
-# aiLock = threading.Lock()
-# numEvaled = 0
-# newGenStart = threading.Condition(aiLock)
-# seedAI = createRandomSeeds(16)
-# beginEvolution(seedAI,10,numThreads=numThreads)
+numThreads = 0
+aiLock = threading.Lock()
+numEvaled = 0
+newGenStart = threading.Condition(aiLock)
+seedAI = createRandomSeeds(2)
+beginEvolution(seedAI,2,numThreads=numThreads)
 
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
 # main(tetrominoAI.TetrominoChromosome(weights=[0.04406910518575535, -0.8239039168154034, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.29575025661696075, 0.3584059853811308]))
-main(tetrominoAI.TetrominoChromosome(useNext=True,weights=[0.04406910518575535, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
-
+# main(tetrominoAI.TetrominoChromosome(useNext=True,weights=[0.04406910518575535, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
+# main()

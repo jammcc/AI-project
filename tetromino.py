@@ -62,7 +62,7 @@ def runGame(ai=None, lineLimit = 100):
             numPieces += 1
             lastFallTime = time.time() # reset lastFallTime
 
-            if not isValidPosition(board, fallingPiece) or linesCleared > 1000:
+            if not isValidPosition(board, fallingPiece) or linesCleared > lineLimit:
                 print("Final score: {0}, Lines: {1}, Pieces: {2}".format(score, linesCleared, numPieces))
                 return score, linesCleared # can't fit a new piece on the board, so game over
 
