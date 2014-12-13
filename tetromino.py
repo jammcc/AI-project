@@ -60,8 +60,8 @@ def runGame(ai=None):
             nextPiece = getNewPiece()
             lastFallTime = time.time() # reset lastFallTime
 
-            if not isValidPosition(board, fallingPiece):
-                print("Final score: {0}".format(score))
+            if not isValidPosition(board, fallingPiece) or linesCleared > 100:
+                print("Final score: {0}, Lines: {1}".format(score, linesCleared))
                 return score, linesCleared # can't fit a new piece on the board, so game over
 
         if ai == None:
@@ -143,7 +143,7 @@ def runGame(ai=None):
         else:
             stepTime = True
             # print("x: {0}, y:{1}, rot: {2}, shape: {3}".format(fallingPiece['x'],fallingPiece['y'],fallingPiece['rotation'],fallingPiece['shape']))
-            fallingPiece, move_score = ai.bestMove(board,fallingPiece, nextPiece=None)
+            fallingPiece, move_score = ai.bestMove(board,fallingPiece, nextPiece=nextPiece)
             # print("fallingpiece y: {0}, x: {1}, shape:{2}, rotation: {3}".format(fallingPiece['y'],fallingPiece['x'],fallingPiece['shape'], fallingPiece['rotation']))
 
         # let the piece fall if it is time to fall

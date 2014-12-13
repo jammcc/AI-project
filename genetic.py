@@ -143,7 +143,7 @@ def createRandomSeeds(num_seeds):
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.542307978631468, 0.8540339922767739, -0.6974984811734923, -0.2119389800396081, 0.27763894057955496, 0.09744403762439835, -0.16825829666764758]))
 	return seedAI
 
-numThreads = 4
+numThreads = 0
 aiLock = threading.Lock()
 numEvaled = 0
 newGenStart = threading.Condition(aiLock)
