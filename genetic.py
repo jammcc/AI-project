@@ -67,8 +67,6 @@ def beginEvolution(seedAI,num_generations = None,numThreads=0):
 				evaluateFitness(ai)
 		ordered = orderAIs(seedAI)
 		seedAI = newGeneration(ordered)
-
-		ordered = orderAIs(deepcopy(seedAI))
 		with open(fileName, 'a') as f:
 			f.write(str(ordered[0].weights) + "|" + str(ordered[0].score) + "|" + str(ordered[0].linesCleared) + "\n")
 		print("Score: {0}, Lines: {2}, Weights: {1}".format(ordered[0].score,ordered[0].weights,ordered[0].linesCleared))	
@@ -91,11 +89,10 @@ def newGeneration(parentAIs):
 	babies = []
 	for i in range(len(parentAIs)):
 		parent1 = chooseParents(parentAIs)
-		parentAIs.remove(parent1)
-		parent2 = chooseParents(parentAIs)
+		tempparents = deepcopy(parentAIs)
+		parent2 = chooseParents(tempparents)
 		baby = makeBaby(parent1,parent2)
 		babies.append(baby)
-		parentAIs.append(parent1)
 	return babies
 
 #choose parents proportional to fitness
@@ -107,7 +104,8 @@ def chooseParents(parentAIs):
 		curr += ai.score
 		if  i < curr:
 			return ai
-	return parentAIs[randint(0,len(parentAIs)-1)]
+	rand = randint(0,len(parentAIs)-1)
+	return parentAIs[rand]
 
 def makeBaby(parent1,parent2):
 	numweights = len(parent1.weights)
@@ -155,8 +153,8 @@ numThreads = 0
 aiLock = threading.Lock()
 numEvaled = 0
 newGenStart = threading.Condition(aiLock)
-seedAI = createRandomSeeds(2)
-beginEvolution(seedAI,2,numThreads=numThreads)
+seedAI = createRandomSeeds(4)
+beginEvolution(seedAI,4,numThreads=numThreads)
 
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
