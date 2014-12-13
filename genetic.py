@@ -1,16 +1,54 @@
 import tetrominoAI
 from tetromino import main,runGame
 from random import uniform, randint, random
+import threading
+import Queue
+import time
 
-def beginEvolution(seedAI,num_generations = None):
+class aiThread(threading.Thread):
+	"""docstring for aiThread"""
+	def __init__(self, threadID, aiQ):
+		threading.Thread.__init__(self)
+		self.threadID = threadID
+		self.aiQ = aiQ
+	def run(self):
+		while True:
+			aiLock.acquire()
+			if not self.aiQ.empty():
+				ai = self.aiQ.get()
+				aiLock.release()
+				evaluateFitness(ai)
+			else:
+				aiLock.release()
+				break
 
+def beginMultiTheadEval(seedAI):
+	aiQueue = Queue.Queue(len(seedAI))
+	for ai in seedAI:
+		aiQueue.put(ai)
+
+	threads = []
+	for i in range(numThreads):
+		thread = aiThread(i, aiQueue)
+		thread.start()
+		threads.append(thread)
+	while not aiQueue.empty():
+		pass
+
+	for t in threads:
+		t.join()
+
+def beginEvolution(seedAI,num_generations = None,multi=False):
 	if num_generations == None:
 		num_generations = 1
 
 	for i in range(num_generations):
 		print("Generation {0}".format(i))
-		for ai in seedAI:
-			evaluateFitness(ai)
+		if multi:
+			beginMultiTheadEval(seedAI)
+		else:
+			for ai in seedAI:
+				evaluateFitness(ai)
 		ordered = orderAIs(seedAI)
 		seedAI = newGeneration(ordered)
 
@@ -49,7 +87,7 @@ def chooseParents(parentAIs):
 		curr += ai.score
 		if  i < curr:
 			return ai
-	return None
+	return parentAIs[randint(0,len(parentAIs)-1)]
 
 def makeBaby(parent1,parent2):
 	numweights = len(parent1.weights)
@@ -89,7 +127,9 @@ def createRandomSeeds(num_seeds):
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights))
 	return seedAI
 
-seedAI = createRandomSeeds(4)
-beginEvolution(seedAI,10)
+numThreads = 4
+aiLock = threading.Lock()
+seedAI = createRandomSeeds(16)
+beginEvolution(seedAI,10,True)
 
 # main(tetrominoAI.TetrominoChromosome())
