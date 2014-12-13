@@ -8,6 +8,9 @@ import Queue
 import time
 
 fileName = 'weights.txt'
+aiLock = threading.Lock()
+numEvaled = 0
+newGenStart = threading.Condition(aiLock)
 
 class aiThread(threading.Thread):
 	"""docstring for aiThread"""
@@ -156,9 +159,7 @@ def createRandomSeeds(num_seeds):
 	return seedAI
 
 # numThreads = 0
-# aiLock = threading.Lock()
-# numEvaled = 0
-# newGenStart = threading.Condition(aiLock)
+
 # seedAI = createRandomSeeds(16)
 # beginEvolution(seedAI,200,numThreads=numThreads)
 
@@ -175,10 +176,11 @@ weight =  [0, -0.1, -0.959944778488526, -0.7565604302338298, 0.3189338415448301,
 
 # main(tetrominoAI.TetrominoChromosome(weights=weight))
 
-hundlines_16nr_200gen = 'weights100lines16NRseeds200gen.txt'
+# hundlines_16nr_200gen = 'weights100lines16NRseeds200gen.txt'
+# parsedAIs1 = parser.Parser(hundlines_16nr_200gen)
+# parsedAIs1.plotScores()
+
 hundlines_16r_200gen = 'weights100lines16Rseeds200gen.txt'
-parsedAIs1 = parser.Parser(hundlines_16nr_200gen)
 parsedAIs2 = parser.Parser(hundlines_16r_200gen)
-parsedAIs1.plotScores()
 parsedAIs2.plotScores()
 # main()
