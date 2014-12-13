@@ -163,7 +163,8 @@ def createRandomSeeds(num_seeds):
 		altDiffWeight = uniform(-1,1)
 		hoRoughWeight = uniform(-1,1)
 		vertRoughWeight = uniform(-1,1)
-		weights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight, scoreWeight,wellWeight,altDiffWeight,hoRoughWeight,vertRoughWeight]
+		weightedHolesWeight = uniform(-1,1)
+		weights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight, scoreWeight,wellWeight,altDiffWeight,hoRoughWeight,vertRoughWeight,weightedHolesWeight]
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights,useNext=False))
 	# seedAI = []
 	# for i in range(num_seeds):

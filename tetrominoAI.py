@@ -19,8 +19,9 @@ wellWeight = 0.1
 altDiffWeight = 0.2
 hoRoughWeight = -0.1
 vertRoughWeight = -0.1
+weightedHolesWeight = -0.5
 
-testWeights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight,scoreWeight,wellWeight, altDiffWeight, hoRoughWeight, vertRoughWeight]
+testWeights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight,scoreWeight,wellWeight, altDiffWeight, hoRoughWeight, vertRoughWeight,weightedHolesWeight]
 
 class TetrominoChromosome:
 	def __init__(self, weights=testWeights, useNext = False):
@@ -96,9 +97,9 @@ class TetrominoChromosome:
 		clearScore = removeCompleteLines(newBoard)
 		level = int(clearScore / 10) + 1
 		scoreScore = calculateScore(clearScore,level)
-		holeScore,blockadeScore, height, aggregate_height, bumpiness, deepest_well, alt_diff, ho_rough, vert_rough = self.scoresOfBoard(newBoard)
+		holeScore,blockadeScore, height, aggregate_height, bumpiness, deepest_well, alt_diff, ho_rough, vert_rough, weighted_holes= self.scoresOfBoard(newBoard)
 		# print("Distance: {0}, Clear: {1}, Holes: {2}, Blockades: {3}, Height: {4}, bumpiness:{5}".format(distScore,clearScore,holeScore,blockadeScore, height,bumpiness))
-		return newBoard, [distScore, clearScore, holeScore, blockadeScore, height, aggregate_height, bumpiness,scoreScore,deepest_well, alt_diff, ho_rough, vert_rough]
+		return newBoard, [distScore, clearScore, holeScore, blockadeScore, height, aggregate_height, bumpiness,scoreScore,deepest_well, alt_diff, ho_rough, vert_rough, weighted_holes]
 
 	def distToBottom(self,board,piece):
 		for i in range(1,BOARDHEIGHT+2):
@@ -115,6 +116,7 @@ class TetrominoChromosome:
 		prev_col_height = None
 		deepest_well = 0.0
 		bumpiness = 0.0
+		weighted_holes = 0.0
 
 		horizontal_roughness = 0.0
 		vertical_roughness = 0.0
@@ -126,10 +128,11 @@ class TetrominoChromosome:
 				horizontal_roughness += ho_roughness
 			prev_column = column
 
-			h, b, colheight, vert_roughness= self.scoresPerColumn(column)
+			h, b, colheight, vert_roughness, weightHoles = self.scoresPerColumn(column)
 			holes += h
 			blockades += b
 			vertical_roughness += vert_roughness
+			weighted_holes += weightHoles
 			if colheight > height:
 				height = colheight
 			if colheight < shortest:
@@ -139,7 +142,7 @@ class TetrominoChromosome:
 				deepest_well = max(deepest_well, abs(colheight - prev_col_height))
 				bumpiness += abs(colheight - prev_col_height)
 			prev_col_height = colheight
-		return holes, blockades, height, aggregate_height, bumpiness, deepest_well, (height - shortest), horizontal_roughness,vert_roughness
+		return holes, blockades, height, aggregate_height, bumpiness, deepest_well, (height - shortest), horizontal_roughness,vert_roughness, weighted_holes
 
 	def scoresPerColumn(self,column):
 		holes = 0.0
@@ -150,6 +153,9 @@ class TetrominoChromosome:
 		columnHeight = BOARDHEIGHT
 		vertical_roughness = 0.0
 		prev_block = None
+		weighted_holes = 0.0 #linearly proportional to row
+
+		curr_row = len(column) + 1
 
 		for block in column:
 			if prev_block != None:
@@ -165,9 +171,11 @@ class TetrominoChromosome:
 				curr_blockades = 0
 				if blocksInColumn != 0:
 					holes += 1
+					weighted_holes += curr_row
 				if blocksInColumn == 0:
 					columnHeight -= 1.0
-		return holes, blockades, columnHeight, vertical_roughness
+			curr_row -= 1
+		return holes, blockades, columnHeight, vertical_roughness, weighted_holes
 
 	def compareColumns(self, col1, col2):
 		horizontal_roughness = 0
