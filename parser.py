@@ -1,8 +1,14 @@
 from tetrominoAI import TetrominoChromosome
+from genetic import orderAIs
 
 class Parser:
 	def __init__(self):
 		return
+
+	def getTopNAIs(self,filename,n):
+		ais = self.parseWeightFile(filename)
+		ordered = orderAIs(ais)
+		return ordered[:n]
 
 	def parseWeightFile(self,filename):
 		ais = []
