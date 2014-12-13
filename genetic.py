@@ -161,7 +161,7 @@ def createRandomSeeds(num_seeds):
 
 numThreads = 0
 seedAI = createRandomSeeds(16)
-beginEvolution(seedAI,200,numThreads=numThreads,lineLimit=100)
+beginEvolution(seedAI,200,numThreads=numThreads,lineLimit=100000)
 
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))

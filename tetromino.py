@@ -8,7 +8,7 @@ from pygame.locals import *
 from constants import *
 import tetrominoAI
 
-def main(ai=None):
+def main(ai=None, lineLimit = 100):
     global FPSCLOCK, DISPLAYSURF, BASICFONT, BIGFONT
     pygame.init()
     FPSCLOCK = pygame.time.Clock()
@@ -23,7 +23,7 @@ def main(ai=None):
         # else:
         #     pygame.mixer.music.load('tetrisc.mid')
         # pygame.mixer.music.play(-1, 0.0)
-        runGame(ai)
+        runGame(ai,lineLimit=lineLimit)
         # pygame.mixer.music.stop()
         showTextScreen('Game Over')
 
