@@ -30,7 +30,7 @@ class TetrominoChromosome:
 		numRotations = len(PIECES[piece['shape']])
 		tempPiece['x'] = randint(-2,BOARDWIDTH-1)
 		tempPiece['rotation'] = randint(0,numRotations-1)
-		tempPiece['y'] += distToBottom(board,tempPiece)
+		tempPiece['y'] += self.distToBottom(board,tempPiece)
 			
 		return tempPiece if isValidPosition(board,tempPiece) else piece
 
@@ -43,6 +43,7 @@ class TetrominoChromosome:
 		numRotations = len(PIECES[pieceId])
 		best_piece = piece
 		best_score = self.getScore(board,tpiece,nextPiece=nextPiece)
+		best_piece['y'] += self.distToBottom(board,piece)
 		for position in range(-2,BOARDWIDTH):
 			for rot in range(numRotations):
 				tempPiece = dict(piece)

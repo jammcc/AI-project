@@ -150,9 +150,8 @@ def createRandomSeeds(num_seeds):
 # aiLock = threading.Lock()
 # numEvaled = 0
 # newGenStart = threading.Condition(aiLock)
-# seedAI = createRandomSeeds(8)
-# beginEvolution(seedAI,10,numThreads=numThreads)
+# seedAI = createRandomSeeds(2)
+# beginEvolution(seedAI,2,numThreads=numThreads)
 
-DRAWMODE = True
 main(tetrominoAI.TetrominoChromosome())
 
