@@ -82,13 +82,14 @@ def orderAIs(ais):
 	return ordered
 
 def newGeneration(parentAIs):
-	parentAIs.pop(-1)
-	parent1 = chooseParents(parentAIs)
-	parent2 = parentAIs[1]
-	while parent2 == parent1:
-		parent2 = chooseParents(parentAIs)
-	baby = makeBaby(parent1,parent2)
-	parentAIs.append(baby)
+	if len(parentAIs) > 1:
+		parentAIs.pop(-1)
+		parent1 = chooseParents(parentAIs)
+		parent2 = parentAIs[1]
+		while parent2 == parent1:
+			parent2 = chooseParents(parentAIs)
+		baby = makeBaby(parent1,parent2)
+		parentAIs.append(baby)
 	return parentAIs
 
 #choose parents proportional to fitness
@@ -147,7 +148,7 @@ numThreads = 0
 aiLock = threading.Lock()
 numEvaled = 0
 newGenStart = threading.Condition(aiLock)
-seedAI = createRandomSeeds(16)
-beginEvolution(seedAI,10,numThreads=numThreads)
+seedAI = createRandomSeeds(1)
+beginEvolution(seedAI,1,numThreads=numThreads)
 
 # main(tetrominoAI.TetrominoChromosome())
