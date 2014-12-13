@@ -34,10 +34,11 @@ class TetrominoChromosome:
 
 	def bestMove(self,board, piece, nextPiece = None):
 		#perform BFS
+		tpiece = dict(piece)
 		pieceId = piece['shape']
 		numRotations = len(PIECES[pieceId])
 		best_piece = piece
-		best_score = self.getScore(board,piece,nextPiece=nextPiece)
+		best_score = self.getScore(board,tpiece,nextPiece=nextPiece)
 		for position in range(-2,BOARDWIDTH):
 			for rot in range(numRotations):
 				tempPiece = dict(piece)

@@ -145,7 +145,7 @@ def runGame(ai=None):
         else:
             stepTime = True
             # print("x: {0}, y:{1}, rot: {2}, shape: {3}".format(fallingPiece['x'],fallingPiece['y'],fallingPiece['rotation'],fallingPiece['shape']))
-            fallingPiece, move_score = ai.bestMove(board,fallingPiece, nextPiece=None)
+            fallingPiece, move_score = ai.bestMove(board,fallingPiece, nextPiece=nextPiece)
             # print("fallingpiece y: {0}, x: {1}, shape:{2}, rotation: {3}".format(fallingPiece['y'],fallingPiece['x'],fallingPiece['shape'], fallingPiece['rotation']))
 
         # let the piece fall if it is time to fall
