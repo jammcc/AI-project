@@ -81,16 +81,17 @@ def orderAIs(ais):
 		ordered.append(ais.pop(bestindex))
 	return ordered
 
+#generate entirely new generation of chromosomes
 def newGeneration(parentAIs):
-	if len(parentAIs) > 1:
-		parentAIs.pop(-1)
+	babies = []
+	for i in range(len(parentAIs)):
 		parent1 = chooseParents(parentAIs)
-		parent2 = parentAIs[1]
+		parent2 = chooseParents(parentAIs)
 		while parent2 == parent1:
 			parent2 = chooseParents(parentAIs)
 		baby = makeBaby(parent1,parent2)
-		parentAIs.append(baby)
-	return parentAIs
+		babies.append(baby)
+	return babies
 
 #choose parents proportional to fitness
 def chooseParents(parentAIs):
