@@ -24,3 +24,8 @@ class Parser:
 		plt.plot([i for i in range(len(self.ais))], [ai.score for ai in self.ais])
 		# plt.axis([0, len(ai, 0, 20])
 		plt.show()
+
+	def plotLinesCleared(self):
+		plt.plot([i for i in range(len(self.ais))], [ai.linesCleared for ai in self.ais])
+		# plt.axis([0, len(ai, 0, 20])
+		plt.show()
