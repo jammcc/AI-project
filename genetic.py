@@ -1,4 +1,5 @@
 import tetrominoAI
+from parser import Parser
 from tetromino import main,runGame
 from random import uniform, randint, random
 from copy import deepcopy
@@ -154,12 +155,12 @@ def createRandomSeeds(num_seeds):
 	# 	seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.29273680972498917, -0.35995754766161214, 0.012633707025612395, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
 	return seedAI
 
-numThreads = 0
-aiLock = threading.Lock()
-numEvaled = 0
-newGenStart = threading.Condition(aiLock)
-seedAI = createRandomSeeds(16)
-beginEvolution(seedAI,200,numThreads=numThreads)
+# numThreads = 0
+# aiLock = threading.Lock()
+# numEvaled = 0
+# newGenStart = threading.Condition(aiLock)
+# seedAI = createRandomSeeds(16)
+# beginEvolution(seedAI,200,numThreads=numThreads)
 
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
@@ -169,4 +170,13 @@ beginEvolution(seedAI,200,numThreads=numThreads)
 # main(tetrominoAI.TetrominoChromosome(weights=[0.14153234653955638, 0.16899177050877512, -0.9987792538542004, -0.8453062347116065, 0.23130316007976615, 0.18111870466738278, -0.2900956878696639, 0.28976659359991985]))
 # main(tetrominoAI.TetrominoChromosome(weights=[0.35272186636082536, 0.27988300741810423, -0.994208214509138, -0.7531771675316605, 0.495530410285022, -0.8559373911265069, -0.2900956878696639, 0.17112501629360133]))
 # main(tetrominoAI.TetrominoChromosome(weights=[0.5182933670384273, 0.14919437263201996, -0.9662774875146158, -0.5134136356909402, 0.7046477056021003, -0.9394286440371347, -0.3604850414719061, 0.9049378315570618]))
+
+weight =  [0, -0.1, -0.959944778488526, -0.7565604302338298, 0.3189338415448301, -0.917976747836295, -0.2781958880440105, 0.62304571252862946, 0.15834714777029513, 0.08137614982575325, -0.3685169906372381, -0.20672949820738218]
+
+# main(tetrominoAI.TetrominoChromosome(weights=weight))
+
+# hundlines_16nr_200gen = 'weights100lines16NRseeds200gen.txt'
+# ais = Parser().parseWeightFile(hundlines_16nr_200gen)
+# print(ais[0].score)
+
 # main()
