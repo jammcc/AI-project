@@ -1,7 +1,7 @@
 import random, time, pygame, sys
 from pygame.locals import *
 from constants import *
-from tetromino import isValidPosition, addToBoard, removeCompleteLines
+from tetromino import isValidPosition, addToBoard, removeCompleteLines, calculateScore
 from random import randint
 from copy import deepcopy
 
@@ -14,8 +14,9 @@ blockadeWeight = -0.25
 heightWeight = 0
 aggHeightWeight = -0.66590
 bumpinessWeight = -0.24077
+scoreWeight = 1.0
 
-testWeights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight]
+testWeights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight,scoreWeight]
 
 class TetrominoChromosome:
 	def __init__(self, weights=testWeights, useNext = False):
@@ -88,9 +89,11 @@ class TetrominoChromosome:
 			addToBoard(newBoard,tempPiece)
 
 		clearScore = removeCompleteLines(newBoard)
+		level = int(clearScore / 10) + 1
+		scoreScore = calculateScore(clearScore,level)
 		holeScore,blockadeScore, height, aggregate_height, bumpiness = self.scoresOfBoard(newBoard)
 		# print("Distance: {0}, Clear: {1}, Holes: {2}, Blockades: {3}, Height: {4}, bumpiness:{5}".format(distScore,clearScore,holeScore,blockadeScore, height,bumpiness))
-		return newBoard, [distScore, clearScore, holeScore, blockadeScore, height, aggregate_height, bumpiness]
+		return newBoard, [distScore, clearScore, holeScore, blockadeScore, height, aggregate_height, bumpiness,scoreScore]
 
 	def distToBottom(self,board,piece):
 		for i in range(1,BOARDHEIGHT+2):
