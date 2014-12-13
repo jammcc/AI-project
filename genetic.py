@@ -126,11 +126,14 @@ def createRandomSeeds(num_seeds):
 		bumpinessWeight = uniform(-1,1)
 		weights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight]
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights))
+	seedAI = []
+	for i in range(num_seeds):
+		seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.542307978631468, 0.8540339922767739, -0.6974984811734923, -0.2119389800396081, 0.27763894057955496, 0.09744403762439835, -0.16825829666764758]))
 	return seedAI
 
-numThreads = 0
+numThreads = 4
 aiLock = threading.Lock()
-seedAI = createRandomSeeds(4)
+seedAI = createRandomSeeds(16)
 beginEvolution(seedAI,10,numThreads=numThreads)
 
 # main(tetrominoAI.TetrominoChromosome())
