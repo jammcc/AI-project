@@ -90,15 +90,26 @@ def orderAIs(ais):
 	return ordered
 
 #generate entirely new generation of chromosomes
-def newGeneration(parentAIs):
+def newGeneration(parentAIs, elitism=False):
 	babies = []
-	for i in range(len(parentAIs)):
-		parent1 = chooseParents(parentAIs)
-		tempparents = list(parentAIs)
-		tempparents.remove(parent1)
-		parent2 = chooseParents(tempparents)
-		baby = makeBaby(parent1,parent2)
-		babies.append(baby)
+	if elitism: #remove weakest half, keep top quarter, make babies from top half
+		tophalf = parentAIs[:len(parentAIs/2)]
+		babies = parentAIs[:len(parentAIs/4)]
+		for i in range(len(parentAIs) - len(parentAIs)/4):
+			parent1 = chooseParents(tophalf)
+			tempparents = list(tophalf)
+			tempparents.remove(parent1)
+			parent2 = chooseParents(tempparents)
+			baby = makeBaby(parent1,parent2)
+			babies.append(baby)
+	else:
+		for i in range(len(parentAIs)):
+			parent1 = chooseParents(parentAIs)
+			tempparents = list(parentAIs)
+			tempparents.remove(parent1)
+			parent2 = chooseParents(tempparents)
+			baby = makeBaby(parent1,parent2)
+			babies.append(baby)
 	return babies
 
 #choose parents proportional to fitness
@@ -176,9 +187,9 @@ weight =  [0, -0.1, -0.959944778488526, -0.7565604302338298, 0.3189338415448301,
 
 # main(tetrominoAI.TetrominoChromosome(weights=weight))
 
-hundlines_16nr_200gen = 'weights100lines16NRseeds200gen.txt'
-parsedAIs1 = parser.Parser(hundlines_16nr_200gen)
-parsedAIs1.plotScoreLineRatio()
+# hundlines_16nr_200gen = 'weights100lines16NRseeds200gen.txt'
+# parsedAIs1 = parser.Parser(hundlines_16nr_200gen)
+# parsedAIs1.plotScoreLineRatio()
 # parsedAIs1.plotScores()
 
 # hundlines_16r_200gen = 'weights100lines16Rseeds200gen.txt'
@@ -186,4 +197,8 @@ parsedAIs1.plotScoreLineRatio()
 # parsedAIs2.plotScores()
 # parsedAIs2.plotLinesCleared()
 # parsedAIs2.plotScoreLineRatio()
+
+parsedAIs3 = parser.Parser('weights.txt')
+parsedAIs3.plotLinesCleared()
+
 # main()
