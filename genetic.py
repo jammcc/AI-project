@@ -89,7 +89,8 @@ def newGeneration(parentAIs):
 	babies = []
 	for i in range(len(parentAIs)):
 		parent1 = chooseParents(parentAIs)
-		tempparents = deepcopy(parentAIs)
+		tempparents = list(parentAIs)
+		tempparents.remove(parent1)
 		parent2 = chooseParents(tempparents)
 		baby = makeBaby(parent1,parent2)
 		babies.append(baby)
@@ -153,7 +154,7 @@ numThreads = 0
 aiLock = threading.Lock()
 numEvaled = 0
 newGenStart = threading.Condition(aiLock)
-seedAI = createRandomSeeds(4)
+seedAI = createRandomSeeds(2)
 beginEvolution(seedAI,4,numThreads=numThreads)
 
 
