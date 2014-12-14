@@ -97,8 +97,8 @@ class TetrominoChromosome:
 
 		clearScore = removeCompleteLines(newBoard)
 		level = int(clearScore / 10) + 1
-		tetrisScore = calculateScore(4,level) if clearScore == 4 else 0
-		scoreScore = calculateScore(clearScore,level)
+		tetrisScore = calculateScore(4,0) if clearScore == 4 else 0
+		scoreScore = calculateScore(clearScore,0)
 		holeScore,blockadeScore, height, aggregate_height, bumpiness, deepest_well, alt_diff, ho_rough, vert_rough, weighted_holes= self.scoresOfBoard(newBoard)
 		# print("Distance: {0}, Clear: {1}, Holes: {2}, Blockades: {3}, Height: {4}, bumpiness:{5}".format(distScore,clearScore,holeScore,blockadeScore, height,bumpiness))
 		return newBoard, [distScore, clearScore, holeScore, blockadeScore, height, aggregate_height, bumpiness,scoreScore,deepest_well, alt_diff, ho_rough, vert_rough, weighted_holes, tetrisScore]
@@ -123,6 +123,8 @@ class TetrominoChromosome:
 		horizontal_roughness = 0.0
 		vertical_roughness = 0.0
 
+		num_wells = 0.0
+
 		prev_column = None
 		for column in board:
 			if prev_column != None:
@@ -141,8 +143,10 @@ class TetrominoChromosome:
 				shortest = colheight
 			aggregate_height +=  colheight
 			if prev_col_height != None:
-				deepest_well = max(deepest_well, abs(colheight - prev_col_height))
-				bumpiness += abs(colheight - prev_col_height)
+				height_diff= abs(colheight - prev_col_height)
+				deepest_well = max(deepest_well, height_diff)
+				bumpiness += height_diff
+				num_wells = num_wells += 1 if height_diff > 2 else num_wells
 			prev_col_height = colheight
 		return holes, blockades, height, aggregate_height, bumpiness, deepest_well, (height - shortest), horizontal_roughness,vert_roughness, weighted_holes
 
