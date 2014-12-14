@@ -143,7 +143,8 @@ def runGame(ai=None, lineLimit = 100):
         if ai == None:
             stepTime = time.time() - lastFallTime > fallFreq
         elif ai != None and DRAWMODE:
-            stepTime = time.time() - lastFallTime > fallFreq
+            # stepTime = time.time() - lastFallTime > fallFreq
+            stepTime = True
             fallingPiece, move_score = ai.bestMove(board,fallingPiece, nextPiece=nextPiece)
             # print("fallingpiece y: {0}, x: {1}, shape:{2}, rotation: {3}".format(fallingPiece['y'],fallingPiece['x'],fallingPiece['shape'], fallingPiece['rotation']))
         else:

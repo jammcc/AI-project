@@ -7,7 +7,6 @@ import threading
 import Queue
 import time
 
-fileName = 'weights.txt'
 aiLock = threading.Lock()
 numEvaled = 0
 newGenStart = threading.Condition(aiLock)
@@ -90,11 +89,11 @@ def orderAIs(ais):
 	return ordered
 
 #generate entirely new generation of chromosomes
-def newGeneration(parentAIs, elitism=False):
+def newGeneration(parentAIs, elitism=True):
 	babies = []
 	if elitism: #remove weakest half, keep top quarter, make babies from top half
-		tophalf = parentAIs[:len(parentAIs/2)]
-		babies = parentAIs[:len(parentAIs/4)]
+		tophalf = parentAIs[:len(parentAIs)/2]
+		babies = parentAIs[:len(parentAIs)/4]
 		for i in range(len(parentAIs) - len(parentAIs)/4):
 			parent1 = chooseParents(tophalf)
 			tempparents = list(tophalf)
@@ -166,14 +165,16 @@ def createRandomSeeds(num_seeds):
 		weightedHolesWeight = uniform(-1,1)
 		weights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight, scoreWeight,wellWeight,altDiffWeight,hoRoughWeight,vertRoughWeight,weightedHolesWeight]
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights,useNext=False))
-	# seedAI = []
-	# for i in range(num_seeds):
-	# 	seedAI.append(tetrominoAI.TetrominoChromosome(weights = [0.29273680972498917, -0.35995754766161214, 0.012633707025612395, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
+	seedAI = []
+	for i in range(num_seeds):
+		seedAI.append(tetrominoAI.TetrominoChromosome(weights = [-0.04437397471669002, 0.7479801381485471, 0.8362922496457046, -0.24011961504107826, -0.375625790426511, 0.8987155097012198, -0.8398365465268014, 0.39980827155830134, -0.43912135712982825, 0.8628568355776391, -0.40295238222356633, -0.8097107039859499, -0.8920129226509008]))
 	return seedAI
 
-# numThreads = 0
-# seedAI = createRandomSeeds(16)
-# beginEvolution(seedAI,200,numThreads=numThreads,lineLimit=100000)
+
+fileName = 'weights100000lines16NR8colSeeds200gen.txt'
+numThreads = 0
+seedAI = createRandomSeeds(16)
+beginEvolution(seedAI,200,numThreads=numThreads,lineLimit=100000)
 
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
@@ -182,9 +183,15 @@ def createRandomSeeds(num_seeds):
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.14153234653955638, 0.16899177050877512, -0.9987792538542004, -0.8453062347116065, 0.23130316007976615, 0.18111870466738278, -0.2900956878696639, 0.28976659359991985]))
 # main(tetrominoAI.TetrominoChromosome(weights=[0.35272186636082536, 0.27988300741810423, -0.994208214509138, -0.7531771675316605, 0.495530410285022, -0.8559373911265069, -0.2900956878696639, 0.17112501629360133]))
-# main(tetrominoAI.TetrominoChromosome(weights=[0.5182933670384273, 0.14919437263201996, -0.9662774875146158, -0.5134136356909402, 0.7046477056021003, -0.9394286440371347, -0.3604850414719061, 0.9049378315570618]))
+# main(tetrominoAI.TetrominoChromosome(weights=[0.5805661700520182, 0.7607647443126826, -0.437695807431314, -0.052252583297341504, 0.964624551596726, 0.3371063413480089, -0.5409979276979748, 0.8420016513789197, -0.0018730300248084308, 0.0019510645601550358, -0.6158826968068729, -0.41595520028074606, -0.773841921631903]),lineLimit=100000)
+# main(tetrominoAI.TetrominoChromosome(useNext=True,weights=[0.4366306442721901, -0.42278664125412124, -0.20514499908822148, -0.052252583297341504, 0.2810089965206035, 0.3371063413480089, -0.4890056043233375, 0.8339003972378074, -0.0018730300248084308, 0.6494234224765245, -0.6158826968068729, -0.41595520028074606, -0.773841921631903]),lineLimit=100000)
+											             # [distWeight,         clearWeight,           holeWeight,           blockadeWeight,        heightWeight,       aggHeightWeight,     bumpinessWeight,     scoreWeight,        wellWeight,             altDiffWeight,      hoRoughWeight,        vertRoughWeight,     weightedHolesWeight]
+											             	# [0.4366306442721901, 0.21403505208600615, -0.20514499908822148, -0.052252583297341504, 0.2810089965206035, 0.70890637968575, -0.4890056043233375, 0.48216995425076203, -0.0018730300248084308, 0.6494234224765245, -0.6158826968068729, 0.6892131250660432, -0.773841921631903]
 
 weight =  [0, -0.1, -0.959944778488526, -0.7565604302338298, 0.3189338415448301, -0.917976747836295, -0.2781958880440105, 0.62304571252862946, 0.15834714777029513, 0.08137614982575325, -0.3685169906372381, -0.20672949820738218]
+
+
+# main(tetrominoAI.TetrominoChromosome(weights=[-0.04437397471669002, 0.7479801381485471, 0.8362922496457046, -0.24011961504107826, -0.375625790426511, 0.8987155097012198, -0.8398365465268014, 0.39980827155830134, -0.43912135712982825, 0.8628568355776391, -0.40295238222356633, -0.8097107039859499, -0.8920129226509008]),lineLimit=100000)
 
 # main(tetrominoAI.TetrominoChromosome(weights=weight))
 
@@ -199,7 +206,7 @@ weight =  [0, -0.1, -0.959944778488526, -0.7565604302338298, 0.3189338415448301,
 # parsedAIs2.plotLinesCleared()
 # parsedAIs2.plotScoreLineRatio()
 
-parsedAIs3 = parser.Parser('weights.txt')
-parsedAIs3.plotLinesCleared()
+# parsedAIs3 = parser.Parser('weights.txt')
+# parsedAIs3.plotLinesCleared()
 
 # main()
