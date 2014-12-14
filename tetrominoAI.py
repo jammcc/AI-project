@@ -20,8 +20,9 @@ altDiffWeight = 0.2
 hoRoughWeight = -0.1
 vertRoughWeight = -0.1
 weightedHolesWeight = -0.5
+tetrisWeight = 0.1
 
-testWeights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight,scoreWeight,wellWeight, altDiffWeight, hoRoughWeight, vertRoughWeight,weightedHolesWeight]
+testWeights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight,scoreWeight,wellWeight, altDiffWeight, hoRoughWeight, vertRoughWeight,weightedHolesWeight,tetrisWeight]
 
 class TetrominoChromosome:
 	def __init__(self, weights=testWeights, useNext = False):
@@ -96,10 +97,11 @@ class TetrominoChromosome:
 
 		clearScore = removeCompleteLines(newBoard)
 		level = int(clearScore / 10) + 1
+		tetrisScore = calculateScore(clearScore//4,level)
 		scoreScore = calculateScore(clearScore,level)
 		holeScore,blockadeScore, height, aggregate_height, bumpiness, deepest_well, alt_diff, ho_rough, vert_rough, weighted_holes= self.scoresOfBoard(newBoard)
 		# print("Distance: {0}, Clear: {1}, Holes: {2}, Blockades: {3}, Height: {4}, bumpiness:{5}".format(distScore,clearScore,holeScore,blockadeScore, height,bumpiness))
-		return newBoard, [distScore, clearScore, holeScore, blockadeScore, height, aggregate_height, bumpiness,scoreScore,deepest_well, alt_diff, ho_rough, vert_rough, weighted_holes]
+		return newBoard, [distScore, clearScore, holeScore, blockadeScore, height, aggregate_height, bumpiness,scoreScore,deepest_well, alt_diff, ho_rough, vert_rough, weighted_holes, tetrisScore]
 
 	def distToBottom(self,board,piece):
 		for i in range(1,BOARDHEIGHT+2):
