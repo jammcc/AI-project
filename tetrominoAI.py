@@ -97,7 +97,7 @@ class TetrominoChromosome:
 
 		clearScore = removeCompleteLines(newBoard)
 		level = int(clearScore / 10) + 1
-		tetrisScore = calculateScore(clearScore//4,level)
+		tetrisScore = calculateScore(4,level) if clearScore == 4 else 0
 		scoreScore = calculateScore(clearScore,level)
 		holeScore,blockadeScore, height, aggregate_height, bumpiness, deepest_well, alt_diff, ho_rough, vert_rough, weighted_holes= self.scoresOfBoard(newBoard)
 		# print("Distance: {0}, Clear: {1}, Holes: {2}, Blockades: {3}, Height: {4}, bumpiness:{5}".format(distScore,clearScore,holeScore,blockadeScore, height,bumpiness))
