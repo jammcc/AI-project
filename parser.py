@@ -22,10 +22,16 @@ class Parser:
 
 	def plotScores(self):
 		plt.plot([i for i in range(len(self.ais))], [ai.score for ai in self.ais])
+		plt.title('Scores of Best AI')
+		plt.ylabel('Score')
+		plt.xlabel('Generation')
 		plt.show()
 
 	def plotLinesCleared(self):
 		plt.plot([i for i in range(len(self.ais))], [ai.linesCleared for ai in self.ais])
+		plt.title('Lines Cleared of Best AI')
+		plt.ylabel('Lines Cleared')
+		plt.xlabel('Generation')
 		plt.show()
 
 	def plotLinesVsScore(self):
@@ -34,4 +40,7 @@ class Parser:
 
 	def plotScoreLineRatio(self):
 		plt.plot([i for i in range(len(self.ais))], [ai.score/float(ai.linesCleared) for ai in self.ais])
+		plt.title('Score per Line of Best AI')
+		plt.ylabel('Score/Line')
+		plt.xlabel('Generation')
 		plt.show()

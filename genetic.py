@@ -166,16 +166,16 @@ def createRandomSeeds(num_seeds):
 		tetrisWeight = uniform(-1,1)
 		weights = [distWeight,clearWeight,holeWeight,blockadeWeight,heightWeight,aggHeightWeight, bumpinessWeight, scoreWeight,wellWeight,altDiffWeight,hoRoughWeight,vertRoughWeight,weightedHolesWeight,tetrisWeight]
 		seedAI.append(tetrominoAI.TetrominoChromosome(weights=weights,useNext=False))
-	seedAI = []
-	for i in range(num_seeds):
-		seedAI.append(tetrominoAI.TetrominoChromosome(weights = [-0.04437397471669002, 0.7479801381485471, 0.8362922496457046, -0.24011961504107826, -0.375625790426511, 0.8987155097012198, -0.8398365465268014, 0.39980827155830134, -0.43912135712982825, 0.8628568355776391, -0.40295238222356633, -0.8097107039859499, -0.8920129226509008]))
+	# seedAI = []
+	# for i in range(num_seeds):
+	# 	seedAI.append(tetrominoAI.TetrominoChromosome(weights = [-0.04437397471669002, 0.7479801381485471, 0.8362922496457046, -0.24011961504107826, -0.375625790426511, 0.8987155097012198, -0.8398365465268014, 0.39980827155830134, -0.43912135712982825, 0.8628568355776391, -0.40295238222356633, -0.8097107039859499, -0.8920129226509008]))
 	return seedAI
 
 
-fileName = 'weights.txt'
-numThreads = 0
-seedAI = createRandomSeeds(16)
-beginEvolution(seedAI,100,numThreads=numThreads,lineLimit=100)
+# fileName = 'weights.txt'
+# numThreads = 0
+# seedAI = createRandomSeeds(16)
+# beginEvolution(seedAI,100,numThreads=numThreads,lineLimit=100)
 
 
 # main(tetrominoAI.TetrominoChromosome(weights=[0.29273680972498917, -0.7551627206341611, -0.10698876478751984, -0.2431462816304657, 0.08325424652896585, -0.7865135453937053, -0.1742107912531552, 0.3584059853811308]))
@@ -189,12 +189,12 @@ beginEvolution(seedAI,100,numThreads=numThreads,lineLimit=100)
 											             # [distWeight,         clearWeight,           holeWeight,           blockadeWeight,        heightWeight,       aggHeightWeight,     bumpinessWeight,     scoreWeight,        wellWeight,             altDiffWeight,      hoRoughWeight,        vertRoughWeight,     weightedHolesWeight]
 											             	# [0.4366306442721901, 0.21403505208600615, -0.20514499908822148, -0.052252583297341504, 0.2810089965206035, 0.70890637968575, -0.4890056043233375, 0.48216995425076203, -0.0018730300248084308, 0.6494234224765245, -0.6158826968068729, 0.6892131250660432, -0.773841921631903]
 
-# weight =  [0,-0.1,-0.9,0,-0.8,0,-0.4,0,0,0,0,0,-0.9,1]
+# weight =  [0.8977030239691923, 0.0006318680531292031, 0.07372662458714441, 0.5007097883265044, 0.46319363761516175, -0.569519613459228, -0.8521767580007076, -0.12289110995927133, 0.3316333640697906, 0.5678085138088147, -0.02797113020725539, 0.4461532705201614, -0.974629849419808, 0.5629610071455657]
 
 
 # main(tetrominoAI.TetrominoChromosome(weights=[-0.04437397471669002, 0.7479801381485471, 0.8362922496457046, -0.24011961504107826, -0.375625790426511, 0.8987155097012198, -0.8398365465268014, 0.39980827155830134, -0.43912135712982825, 0.8628568355776391, -0.40295238222356633, -0.8097107039859499, -0.8920129226509008]),lineLimit=100000)
 
-# main(tetrominoAI.TetrominoChromosome(weights=weight), lineLimit=1000)
+# main(tetrominoAI.TetrominoChromosome(weights=weight,useNext=False), lineLimit=100)
 
 # hundlines_16nr_200gen = 'weights100lines16NRseeds200gen.txt'
 # parsedAIs1 = parser.Parser(hundlines_16nr_200gen)
@@ -207,7 +207,7 @@ beginEvolution(seedAI,100,numThreads=numThreads,lineLimit=100)
 # parsedAIs2.plotLinesCleared()
 # parsedAIs2.plotScoreLineRatio()
 
-# parsedAIs3 = parser.Parser('weights.txt')
-# parsedAIs3.plotLinesCleared()
+parsedAIs3 = parser.Parser('weights.txt')
+parsedAIs3.plotScores()
 
 # main()
