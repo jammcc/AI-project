@@ -123,8 +123,6 @@ class TetrominoChromosome:
 		horizontal_roughness = 0.0
 		vertical_roughness = 0.0
 
-		num_wells = 0.0
-
 		prev_column = None
 		for column in board:
 			if prev_column != None:
@@ -146,7 +144,6 @@ class TetrominoChromosome:
 				height_diff= abs(colheight - prev_col_height)
 				deepest_well = max(deepest_well, height_diff)
 				bumpiness += height_diff
-				num_wells = num_wells += 1 if height_diff > 2 else num_wells
 			prev_col_height = colheight
 		return holes, blockades, height, aggregate_height, bumpiness, deepest_well, (height - shortest), horizontal_roughness,vert_roughness, weighted_holes
 
