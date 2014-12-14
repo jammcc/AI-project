@@ -49,6 +49,7 @@ def runGame(ai=None, lineLimit = 100):
     score = 0
     linesCleared = 0
     numPieces = 0
+    tetris = 0
     level, fallFreq = calculateLevelAndFallFreq(linesCleared)
 
     fallingPiece = getNewPiece()
@@ -63,7 +64,7 @@ def runGame(ai=None, lineLimit = 100):
             lastFallTime = time.time() # reset lastFallTime
 
             if not isValidPosition(board, fallingPiece) or linesCleared > lineLimit:
-                print("Final score: {0}, Lines: {1}, Pieces: {2}".format(score, linesCleared, numPieces))
+                print("Final score: {0}, Lines: {1}, Pieces: {2}, Tetris: {3}".format(score, linesCleared, numPieces, tetris))
                 return score, linesCleared # can't fit a new piece on the board, so game over
 
         if ai == None or (ai != None and DRAWMODE):
@@ -162,6 +163,7 @@ def runGame(ai=None, lineLimit = 100):
                 curr_lines_cleared = removeCompleteLines(board)
                 linesCleared += curr_lines_cleared
                 score += calculateScore(curr_lines_cleared,level)
+                tetris += curr_lines_cleared//4
                 level, fallFreq = calculateLevelAndFallFreq(linesCleared)
                 fallingPiece = None
             else:
