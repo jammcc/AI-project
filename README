@@ -10,14 +10,14 @@ Keep the file and folder structure as is. You may need to install pygame (can be
 In the same folder use the command "python genetic.py", i.e. run genetic.py.
 
 2.1 Training with genetic algorithm
-Uncomment lines 177-180, and comment all of the other lines below it. There are a few parameters to the "beginEvolution" function. 
+Uncomment lines 177-180, and comment all of the other lines below it. Also, in "constants.py", set the boolean flag "DRAWMODE" to "False" on line 1. There are a few parameters to the "beginEvolution" function. 
 - seedAI: represents the initial generation of AI
 - number of generations: number of iterations to perform the genetic algorithm
 - numThreads: used for multithreading. May not actually improve runtime.
 - lineLimit: impose a line limit 
 
 2.2 Running AI that runs practically indefinitely
-Uncomment line 183 (keeping all other active lines commented).
+Uncomment line 183 and set the boolean flag "DRAWMODE" to "True" on line 1 of constants.py.
 
 2.3 Running AI that "tetrises" often
-Uncomment line 186 (keeping all other active lines commented).
+Uncomment line 186 and set the boolean flag "DRAWMODE" to "True" on line 1 of constants.py.
