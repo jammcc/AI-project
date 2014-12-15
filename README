@@ -1,0 +1,23 @@
+Reactive Tetris AI README
+
+Franklin Li, FFL4
+James McClintock, JDM339
+
+1. Setup
+Keep the file and folder structure as is. You may need to install pygame (can be found online).
+
+2. Running the program
+In the same folder use the command "python genetic.py", i.e. run genetic.py.
+
+2.1 Training with genetic algorithm
+Uncomment lines 177-180, and comment all of the other lines below it. There are a few parameters to the "beginEvolution" function. 
+- seedAI: represents the initial generation of AI
+- number of generations: number of iterations to perform the genetic algorithm
+- numThreads: used for multithreading. May not actually improve runtime.
+- lineLimit: impose a line limit 
+
+2.2 Running AI that runs practically indefinitely
+Uncomment line 183 (keeping all other active lines commented).
+
+2.3 Running AI that "tetrises" often
+Uncomment line 186 (keeping all other active lines commented).
